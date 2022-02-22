@@ -8,7 +8,9 @@
 </div>
 <h3>Current Message</h3>
 <div id="chats">
-    
+    @foreach ($data as $message)
+        <p>{{ $message->created_at }} {{ $message->user->name }} {{ $message->message }}</p>
+    @endforeach
 </div>
 <input type="text" id="text">
 <button id="submit" onclick="sentMessage()">送出</button>
@@ -27,7 +29,10 @@
           console.log(user);
       })
       .listen('SentMessage', (data) => {
-          console.log(data);
+        let newElement = document.createElement('p');
+        chatElement = document.getElementById('chats')
+        newElement.textContent = `${data.message.created_at} ${data.user.name}: ${data.message.message}`
+        chatElement.append(newElement)
       })
       .error((error) => {
           console.error(error);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Events\SentMessage;
+use App\Models\Message;
 
 class RoomController extends Controller
 {
@@ -13,7 +14,9 @@ class RoomController extends Controller
     }
     public function index()
     {
-        return view('room');
+        return view('room', [
+            'data' => Message::with('user')->get()
+        ]);
     }
 
     public function sendMessage(Request $request)
